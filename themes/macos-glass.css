@@ -51,6 +51,7 @@
   --traffic-close: #ff5f57;
   --traffic-minimize: #febc2e;
   --traffic-maximize: #28c840;
+  --traffic-glyph: rgb(0 0 0 / 0.6);
 }
 
 /* No backdrop-filter support: use an opaque surface so text stays readable. */

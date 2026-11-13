@@ -17,6 +17,7 @@
   --color-traffic-close: var(--traffic-close);
   --color-traffic-minimize: var(--traffic-minimize);
   --color-traffic-maximize: var(--traffic-maximize);
+  --color-traffic-glyph: var(--traffic-glyph);
 
   --radius-window: var(--radius-window);
   --radius-control: var(--radius-control);

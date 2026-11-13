@@ -1,15 +1,18 @@
 import type { ReactNode } from "react";
 import { MenuBar } from "./MenuBar";
-import { Window } from "./Window";
+import { WindowLayer } from "./WindowLayer";
+import { WindowManagerProvider } from "./WindowManager";
+import type { WindowId } from "./windows";
 
-export function Desktop({ children }: { children: ReactNode }) {
+/** Server component: wallpaper plus the window manager. Window contents are passed in from the page. */
+export function Desktop({ contents }: { contents: Record<WindowId, ReactNode> }) {
   return (
-    <div className="flex min-h-dvh flex-1 flex-col">
+    <div className="h-dvh overflow-hidden">
       <div className="wallpaper fixed inset-0 -z-10" aria-hidden="true" />
-      <MenuBar />
-      <main className="flex flex-1 items-stretch justify-center p-3 sm:p-8">
-        <Window title="guest@hasan: ~">{children}</Window>
-      </main>
+      <WindowManagerProvider>
+        <MenuBar />
+        <WindowLayer contents={contents} />
+      </WindowManagerProvider>
     </div>
   );
 }
