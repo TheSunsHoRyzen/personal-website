@@ -23,20 +23,21 @@
 
   /* Text */
   --fg: #f5f7ff;
-  --fg-muted: rgb(245 247 255 / 0.64);
-  --accent: #6cb6ff;
+  --fg-muted: rgb(245 247 255 / 0.78);
+  --accent: #9bd0ff;
   --danger: #ff8a80;
 
-  /* Glass surfaces */
-  --glass-bg: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 0.18),
-    rgb(255 255 255 / 0.06)
-  );
+  /*
+   * Glass surfaces. The dark tint under the white sheen keeps text contrast steady (WCAG AA)
+   * no matter which part of the vivid wallpaper is behind the blur.
+   */
+  --glass-bg:
+    linear-gradient(135deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.04)),
+    rgb(12 16 36 / 0.55);
   --glass-bg-solid: #1c2233;
   --glass-border: rgb(255 255 255 / 0.22);
   --glass-highlight: rgb(255 255 255 / 0.45);
-  --glass-blur: blur(28px) saturate(180%);
+  --glass-blur: blur(28px) saturate(140%);
   --glass-shadow:
     0 24px 60px rgb(0 0 0 / 0.45), 0 2px 8px rgb(0 0 0 / 0.25);
 
@@ -56,6 +57,13 @@
   --traffic-minimize: #febc2e;
   --traffic-maximize: #28c840;
   --traffic-glyph: rgb(0 0 0 / 0.6);
+}
+
+/* Touch-sized menu bar on phones (the menu items grow to fill it). */
+@media (max-width: 639px) {
+  [data-theme="macos-glass"] {
+    --menubar-height: 44px;
+  }
 }
 
 /* No backdrop-filter support: use an opaque surface so text stays readable. */

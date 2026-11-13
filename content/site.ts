@@ -38,7 +38,7 @@ export const site = {
     },
   ] satisfies SiteLink[],
   summary:
-    "I’m a Computer Science and Physics student at Rutgers University Honors College (graduating May 2027) interested in distributed systems, cloud infrastructure, and applied machine learning. I enjoy understanding how systems work under the hood, whether that means benchmarking TCP throughput across Linux clusters, building serverless event pipelines, or shipping full-stack tools that solve problems I encounter. Outside of engineering, I lead career-related programming for the Coding and Social Lounge and have taken on leadership roles in several orgs, play jazz saxophone, and spend time on the tennis court.",
+    "I’m a Computer Science and Physics student at Rutgers University Honors College (graduating May 2027) interested in distributed systems, cloud infrastructure, and applied machine learning. I enjoy understanding how systems work under the hood, whether that means benchmarking TCP throughput across Linux clusters, building serverless event pipelines, or shipping full-stack tools that solve problems I encounter. Outside of engineering, I lead career-related programming at the Coding and Social Lounge and have taken on leadership roles in several orgs, play jazz saxophone, and spend time on the tennis court.",
   experience: [
     {
       role: "Software Engineering Intern",
@@ -90,13 +90,13 @@ export const site = {
       highlights: [
         "Built a hybrid search engine combining full-text and vector retrieval in Elasticsearch to help analysts reconcile portfolio company carbon emissions data.",
         "Automated financial research workflows with Selenium scraping pipelines and LLM-based earnings call summarization (OpenAI and Gemini APIs), cutting analyst review time by 40%.",
-        "Developed an internal research portal in RedwoodJS that unified carbon emissions search with scheduled AI earnings digests.",
+        "Developed a research portal in RedwoodJS that unified carbon emissions search with scheduled AI earnings digests.",
       ],
     },
     {
       role: "Student Community Manager",
       org: "Rutgers Coding & Social Lounge (CSL)",
-      period: "2024 – Present",
+      period: "Fall 2025 – Present",
       location: "New Brunswick, NJ",
       highlights: [
         "Manage DRIs on three initatives: Scarlet Labs, a semester-long agile project accelerator for student engineering teams, a Rutgers CS led podcast and an alumni event series.",
@@ -114,7 +114,7 @@ export const site = {
       ],
     },
     {
-      role: "Day-of Operations Director",
+      role: "Day-of Director",
       org: "HackRU",
       period: "September 2024 – May 2026",
       location: "Piscataway, NJ",

@@ -17,7 +17,7 @@ export function WindowLayer({
   const { state } = useWindows();
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-(--menubar-height) bottom-0">
+    <main className="pointer-events-none fixed inset-x-0 top-(--menubar-height) bottom-0">
       {windowIds.map((id) => (
         <AppWindow
           key={id}
@@ -28,6 +28,6 @@ export function WindowLayer({
           {contents[id]}
         </AppWindow>
       ))}
-    </div>
+    </main>
   );
 }

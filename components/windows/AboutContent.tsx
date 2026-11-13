@@ -32,6 +32,7 @@ export function AboutContent() {
         {site.experience.map((job) => (
           <Entry
             key={`${job.org}-${job.role}`}
+            as="h4"
             title={`${job.role} — ${job.org}`}
             meta={[job.period, job.location].filter(Boolean).join(" · ")}
           >
@@ -45,7 +46,7 @@ export function AboutContent() {
 
       <Section title="Education">
         {site.education.map((e) => (
-          <Entry key={e.school} title={e.school} meta={e.detail} />
+          <Entry key={e.school} as="h4" title={e.school} meta={e.detail} />
         ))}
       </Section>
     </ContentPage>

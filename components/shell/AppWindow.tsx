@@ -67,14 +67,15 @@ export function AppWindow({ id, win, focused, children }: AppWindowProps) {
         }}
         className="relative flex h-11 shrink-0 touch-none items-center border-b border-glass-border px-4 select-none sm:cursor-grab"
       >
-        <div className="group flex gap-2">
+        <div className="group flex gap-2 max-sm:gap-4">
           {lights.map(({ label, color, glyph, action }) => (
             <button
               key={action}
               type="button"
               aria-label={`${label} ${def.menuName}`}
               onClick={() => dispatch({ type: action, id })}
-              className={`flex size-3 items-center justify-center rounded-full ${color} text-[9px] leading-none text-traffic-glyph focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+              // The ::after pseudo-element enlarges the 12px dot's click/tap area without changing its look.
+              className={`relative flex size-3 items-center justify-center rounded-full after:absolute after:-inset-1 after:content-[''] max-sm:after:-inset-2 ${color} text-[9px] leading-none text-traffic-glyph focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
             >
               <span
                 aria-hidden="true"

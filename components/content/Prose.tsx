@@ -9,8 +9,9 @@ export function ContentPage({ children }: { children: ReactNode }) {
   return <article className="px-6 py-5 text-sm leading-relaxed text-fg">{children}</article>;
 }
 
+/** Window title. h2 because the page's single h1 is the (visually hidden) site name in Desktop. */
 export function PageTitle({ children }: { children: ReactNode }) {
-  return <h1 className="text-2xl font-semibold tracking-tight">{children}</h1>;
+  return <h2 className="text-2xl font-semibold tracking-tight">{children}</h2>;
 }
 
 /** Muted line under a title (role, location, dates). */
@@ -22,31 +23,36 @@ export function Meta({ children }: { children: ReactNode }) {
 export function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mt-7">
-      <h2 className="mb-3 border-b border-glass-border pb-1 text-[11px] font-semibold tracking-widest text-fg-muted uppercase">
+      <h3 className="mb-3 border-b border-glass-border pb-1 text-[11px] font-semibold tracking-widest text-fg-muted uppercase">
         {title}
-      </h2>
+      </h3>
       <div className="space-y-4">{children}</div>
     </section>
   );
 }
 
-/** An item inside a section: bold title, optional meta line, then body. */
+/**
+ * An item inside a window or section: bold title, optional meta line, then body.
+ * `as` is the heading level: h3 directly under a window title, h4 inside a Section.
+ */
 export function Entry({
   title,
   href,
   meta,
+  as: Heading = "h3",
   children,
 }: {
   title: string;
   href?: string;
   meta?: ReactNode;
+  as?: "h3" | "h4";
   children?: ReactNode;
 }) {
   return (
     <div>
-      <h3 className="font-semibold">
+      <Heading className="font-semibold">
         {href ? <ExtLink href={href}>{title}</ExtLink> : title}
-      </h3>
+      </Heading>
       {meta ? <p className="text-fg-muted">{meta}</p> : null}
       {children}
     </div>
@@ -91,6 +97,7 @@ export function ExtLink({ href, children }: { href: string; children: ReactNode 
       className="text-accent underline underline-offset-2 hover:brightness-125 focus-visible:outline-2 focus-visible:outline-accent"
     >
       {children}
+      <span className="sr-only"> (opens in a new tab)</span>
     </a>
   );
 }

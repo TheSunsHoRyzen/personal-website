@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ExtLink } from "@/components/content/Prose";
 import { site } from "@/content/site";
+import { applyTheme, currentThemeId, isThemeId, themes, type ThemeId } from "@/themes";
 import { robotArt } from "./robot";
 
 export type CommandResult = {
@@ -121,6 +122,29 @@ function Stack() {
   );
 }
 
+function ThemeList({ current }: { current: ThemeId }) {
+  return (
+    <div className="space-y-2">
+      <p>Available themes:</p>
+      <ul className="pl-2">
+        {themes.map((t) => (
+          <li key={t.id} className="grid grid-cols-[1rem_9rem_1fr] gap-x-2">
+            <span aria-hidden="true">{t.id === current ? "*" : ""}</span>
+            <span className="text-accent">{t.id}</span>
+            <span className="text-fg-muted">
+              {t.label}
+              {t.id === current ? " (current)" : ""}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p className="text-fg-muted">
+        Switch with: theme &lt;name&gt; · more themes coming soon.
+      </p>
+    </div>
+  );
+}
+
 /** The registry. `help` and `welcome` list this, so new commands show up automatically. */
 export const commands: Command[] = [
   {
@@ -134,6 +158,33 @@ export const commands: Command[] = [
     group: "Portfolio",
     description: "Show this site's tech stack",
     run: () => ({ output: <Stack /> }),
+  },
+  {
+    name: "theme",
+    group: "System",
+    description: "View or switch desktop theme",
+    run: ([name]) => {
+      if (!name) return { output: <ThemeList current={currentThemeId()} /> };
+      const id = name.toLowerCase();
+      if (!isThemeId(id)) {
+        return {
+          exitCode: 1,
+          output: (
+            <p className="text-danger">
+              theme: unknown theme &apos;{name}&apos;. Run <Cmd>theme</Cmd> to list themes.
+            </p>
+          ),
+        };
+      }
+      applyTheme(id);
+      return {
+        output: (
+          <p>
+            Theme set to <Cmd>{id}</Cmd>.
+          </p>
+        ),
+      };
+    },
   },
   {
     name: "clear",

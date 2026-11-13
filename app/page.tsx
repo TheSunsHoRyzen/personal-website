@@ -8,6 +8,7 @@ import { site } from "@/content/site";
 export default function Home() {
   return (
     <Desktop
+      name={site.name}
       links={site.links}
       contents={{
         terminal: <Terminal />,

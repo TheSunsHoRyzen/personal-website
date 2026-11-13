@@ -13,9 +13,10 @@ import { useWindows } from "./WindowManager";
 import { windowDefs, type WindowId } from "./windows";
 
 const itemClass =
-  "block w-full rounded-control px-2.5 py-0.5 text-left text-xs whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-accent";
+  "block w-full rounded-control px-2.5 py-0.5 max-sm:py-2.5 text-left text-xs whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-accent";
 
-export function MenuBar({ links }: { links: SiteLink[] }) {
+/** `name` becomes the page's single (visually hidden) h1, inside the banner landmark. */
+export function MenuBar({ links, name }: { links: SiteLink[]; name: string }) {
   const { state, dispatch } = useWindows();
   const menus = getMenus(links);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -128,7 +129,8 @@ export function MenuBar({ links }: { links: SiteLink[] }) {
   const focusedName = state.focused ? windowDefs[state.focused].menuName : "Desktop";
 
   return (
-    <header className="menubar sticky top-0 z-20 flex items-center gap-4 px-4 text-xs text-fg">
+    <header className="menubar sticky top-0 z-20 flex items-center gap-4 px-4 text-xs text-fg max-sm:gap-2 max-sm:px-3">
+      <h1 className="sr-only">{name}</h1>
       <span className="shrink-0 font-semibold">{focusedName}</span>
 
       <nav
@@ -182,6 +184,7 @@ export function MenuBar({ links }: { links: SiteLink[] }) {
                         className={`${itemClass} text-fg hover:bg-tab-hover`}
                       >
                         {item.label}
+                        <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     ) : (
                       <button

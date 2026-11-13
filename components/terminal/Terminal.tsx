@@ -200,7 +200,8 @@ export function Terminal() {
           ))}
         </div>
 
-        <form onSubmit={onSubmit} className="mt-2 flex items-center gap-2">
+        {/* On phones the prompt is 16px: smaller inputs make iOS Safari zoom the page on focus. */}
+        <form onSubmit={onSubmit} className="mt-2 flex items-center gap-2 max-sm:text-base">
           <label htmlFor="terminal-input" className="shrink-0 text-accent">
             {PROMPT}
           </label>
