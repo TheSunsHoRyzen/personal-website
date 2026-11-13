@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { SiteLink } from "@/content/site";
 import { DesktopIcons } from "./DesktopIcons";
+import { Dock } from "./Dock";
 import { MenuBar } from "./MenuBar";
 import { WindowLayer } from "./WindowLayer";
 import { WindowManagerProvider } from "./WindowManager";
@@ -26,6 +27,7 @@ export function Desktop({
         <MenuBar links={links} name={name} />
         <DesktopIcons />
         <WindowLayer contents={contents} />
+        <Dock />
       </WindowManagerProvider>
     </div>
   );

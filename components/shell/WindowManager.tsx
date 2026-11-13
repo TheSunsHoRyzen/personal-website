@@ -16,12 +16,19 @@ export type WinState = {
   x: number;
   y: number;
   z: number;
+  /**
+   * Bumped every time the window is closed. WindowLayer uses it as the React key, so a closed
+   * window remounts fresh (a closed terminal loses its scrollback and history; a minimized one doesn't).
+   */
+  session: number;
 };
 
 type State = {
   windows: Record<WindowId, WinState>;
   focused: WindowId | null;
   nextZ: number;
+  /** Minimized windows in the order they were minimized (leftmost first in the dock). */
+  dock: WindowId[];
 };
 
 export type Action =
@@ -45,6 +52,7 @@ function topmost(windows: Record<WindowId, WinState>): WindowId | null {
 function reducer(state: State, action: Action): State {
   const { id } = action;
   const w = state.windows[id];
+  const withoutThis = state.dock.filter((d) => d !== id);
 
   switch (action.type) {
     case "open":
@@ -56,15 +64,18 @@ function reducer(state: State, action: Action): State {
         },
         focused: id,
         nextZ: state.nextZ + 1,
+        dock: withoutThis,
       };
-    case "close":
+    case "close": {
+      const windows = {
+        ...state.windows,
+        [id]: { ...w, open: false, minimized: false, maximized: false, session: w.session + 1 },
+      };
+      return { ...state, windows, focused: topmost(windows), dock: withoutThis };
+    }
     case "minimize": {
-      const next =
-        action.type === "close"
-          ? { ...w, open: false, minimized: false, maximized: false }
-          : { ...w, minimized: true };
-      const windows = { ...state.windows, [id]: next };
-      return { ...state, windows, focused: topmost(windows) };
+      const windows = { ...state.windows, [id]: { ...w, minimized: true } };
+      return { ...state, windows, focused: topmost(windows), dock: [...withoutThis, id] };
     }
     case "toggleMaximize":
       return {
@@ -74,6 +85,7 @@ function reducer(state: State, action: Action): State {
         },
         focused: id,
         nextZ: state.nextZ + 1,
+        dock: withoutThis,
       };
     case "move":
       return {
@@ -94,11 +106,12 @@ function init(): State {
         x: windowDefs[id].x,
         y: windowDefs[id].y,
         z: i + 1,
+        session: 0,
       } satisfies WinState,
     ]),
   ) as Record<WindowId, WinState>;
 
-  return { windows, focused: topmost(windows), nextZ: windowIds.length + 1 };
+  return { windows, focused: topmost(windows), nextZ: windowIds.length + 1, dock: [] };
 }
 
 const WindowsContext = createContext<{

@@ -20,7 +20,8 @@ export function WindowLayer({
     <main className="pointer-events-none fixed inset-x-0 top-(--menubar-height) bottom-0">
       {windowIds.map((id) => (
         <AppWindow
-          key={id}
+          // Closing bumps `session`, which remounts the window with fresh internal state.
+          key={`${id}:${state.windows[id].session}`}
           id={id}
           win={state.windows[id]}
           focused={state.focused === id}

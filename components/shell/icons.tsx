@@ -26,7 +26,7 @@ const glyphs: Record<WindowId, ReactNode> = {
   ),
 };
 
-export function WindowIcon({ id }: { id: WindowId }) {
+export function WindowIcon({ id, className = "size-7" }: { id: WindowId; className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ export function WindowIcon({ id }: { id: WindowId }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      className="size-7"
+      className={className}
     >
       {glyphs[id]}
     </svg>

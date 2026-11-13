@@ -136,14 +136,13 @@ export const site = {
   projects: [
     {
       title: "Spotify Clip Saver",
-      href: "https://github.com/TheSunsHoRyzen",
+      href: "https://github.com/TheSunsHoRyzen/SpotifyClipsSaver",
       blurb:
         "Built a full-stack web app for musicians to isolate and loop specific sections of Spotify tracks while transcribing solos or learning arrangements by ear. Designed a Firestore NoSQL schema to map tracks to timestamped user clips and deployed the containerized React and Express.js stack on AWS.",
       tags: ["React", "Express.js", "Firestore", "Docker", "AWS"],
     },
     {
       title: "CS Advising RAG Chatbot",
-      href: "https://github.com/TheSunsHoRyzen",
       blurb:
         "Engineered an academic advising assistant for Rutgers CS students that answers degree requirement, prerequisite, and course-planning questions using official department documentation. Built a hybrid retrieval pipeline pairing dense vector search in PostgreSQL (pgvector) with keyword matching, served via FastAPI and Next.js with Gemini API synthesis.",
       tags: [
@@ -157,18 +156,17 @@ export const site = {
     },
     {
       title: "LLM Knowledge Distillation Engine",
-      href: "https://github.com/TheSunsHoRyzen",
+      href: "https://github.com/egokul71435/deep_learning_distillation",
       blurb:
         "Built a distillation pipeline to transfer chain-of-thought reasoning capabilities from 70B+ parameter teacher models (including Llama 4 Maverick on SciBench) into compact 3B student models. Wrote a custom token-alignment algorithm to reconcile cross-model vocabulary mismatches, improving downstream reasoning accuracy by +3.9% while running local training loops on Apple MPS.",
       tags: ["Python", "PyTorch", "Hugging Face", "PEFT / LoRA", "Apple MPS"],
     },
     {
       title: "Distributed Replicated Object Store",
-      href: "https://github.com/TheSunsHoRyzen",
       blurb:
-        "Designed and implemented a fault-tolerant, multi-node key-value and object storage engine from the ground up to explore consensus, replication, and consistency trade-offs. Implemented leader election, write-ahead logging, and state-machine replication over TCP so the cluster maintains availability and data durability even under simulated node crashes and network partitions.",
+        "Designed and implemented a fault-tolerant, multi-node key-value and object storage engine. Implemented leader election, write-ahead logging, and state-machine replication over TCP so the cluster maintains availability and data durability even under simulated node crashes and network partitions.",
       tags: [
-        "C++ / Go",
+        "Python",
         "Distributed Systems",
         "Raft / Consensus",
         "TCP",
