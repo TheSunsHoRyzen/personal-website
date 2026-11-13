@@ -25,6 +25,7 @@
   --fg: #f5f7ff;
   --fg-muted: rgb(245 247 255 / 0.64);
   --accent: #6cb6ff;
+  --danger: #ff8a80;
 
   /* Glass surfaces */
   --glass-bg: linear-gradient(

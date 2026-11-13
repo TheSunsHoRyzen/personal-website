@@ -10,6 +10,7 @@
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-accent: var(--accent);
+  --color-danger: var(--danger);
   --color-tab-active: var(--tab-active-bg);
   --color-tab-hover: var(--tab-hover-bg);
   --color-glass-border: var(--glass-border);

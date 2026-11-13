@@ -27,16 +27,19 @@ export type SiteLink = { label: string; href: string };
 
 export const site = {
   name: "Hasan Ali",
-  headline: "Software Engineer (placeholder)",
-  location: "Somewhere, Earth (placeholder)",
+  headline: "Aspiring Software Engineer",
+  location: "Piscataway, New Jersey",
 
   links: [
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "GitHub", href: "https://github.com/TheSunsHoRyzen" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/hasan-ali-618021292/",
+    },
   ] satisfies SiteLink[],
 
   summary:
-    "Placeholder summary. A couple of sentences about what you do, what you care about, and what you are working on right now.",
+    "Aspiring Software Engineer. Cares about desiging highly effective systems, AI engineering, and anything in between.",
 
   experience: [
     {
@@ -53,13 +56,17 @@ export const site = {
   ] satisfies Experience[],
 
   education: [
-    { school: "University Name", detail: "B.S. in Computer Science (placeholder)" },
+    {
+      school: "University Name",
+      detail: "B.S. in Computer Science (placeholder)",
+    },
   ],
 
   projects: [
     {
       title: "Project One",
-      blurb: "Placeholder description of what this project does and why it exists.",
+      blurb:
+        "Placeholder description of what this project does and why it exists.",
       href: "https://github.com/",
       tags: ["Next.js", "TypeScript"],
     },
