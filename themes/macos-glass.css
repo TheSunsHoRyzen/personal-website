@@ -7,8 +7,19 @@
 [data-theme="macos-glass"] {
   color-scheme: dark;
 
-  /* Desktop backdrop (the wallpaper itself arrives in a later chunk) */
+  /* Desktop backdrop */
   --desktop-bg: #0b1020;
+  --wallpaper:
+    radial-gradient(60% 50% at 18% 20%, rgb(80 120 255 / 0.55), transparent 70%),
+    radial-gradient(55% 55% at 85% 15%, rgb(190 90 255 / 0.45), transparent 70%),
+    radial-gradient(70% 60% at 75% 90%, rgb(255 110 150 / 0.4), transparent 70%),
+    radial-gradient(60% 60% at 10% 90%, rgb(40 200 190 / 0.35), transparent 70%),
+    linear-gradient(160deg, #0d1330, #1a1040);
+
+  /* Menu bar */
+  --menubar-bg: rgb(20 24 40 / 0.45);
+  --menubar-border: rgb(255 255 255 / 0.1);
+  --menubar-height: 28px;
 
   /* Text */
   --fg: #f5f7ff;

@@ -26,6 +26,19 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+.wallpaper {
+  background: var(--wallpaper);
+  background-color: var(--desktop-bg);
+}
+
+.menubar {
+  background: var(--menubar-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--menubar-border);
+  height: var(--menubar-height);
+}
+
 /* Reusable glass surface; the specific look comes entirely from theme tokens. */
 .glass {
   background: var(--glass-bg);
