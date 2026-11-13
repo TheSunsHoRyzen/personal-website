@@ -79,6 +79,10 @@ function Welcome() {
       <p className="text-fg-muted">
         Tip: Tab completes command names · ↑/↓ history · Ctrl+L clears screen
       </p>
+      <p className="text-fg-muted">
+        Website design inspired by Zain Ali:{" "}
+        <ExtLink href="https://zainali.me/">https://zainali.me/</ExtLink>
+      </p>
       <p>
         Available commands (also try <Cmd>help</Cmd>):
       </p>
