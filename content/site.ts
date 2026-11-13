@@ -1,4 +1,5 @@
-// PLACEHOLDER CONTENT: replace with real details. Everything the site displays comes from here.
+// All the site's content lives here: edit this file to update the About, Projects and Links windows,
+// the menu bar's Links menu, and the terminal's `about` and `stack` commands.
 
 export type Project = {
   title: string;

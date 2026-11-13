@@ -43,6 +43,17 @@ body {
   height: var(--menubar-height);
 }
 
+/* Respect the OS "reduce motion" setting: the only motion here is color transitions, so drop them. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Reusable glass surface; the specific look comes entirely from theme tokens. */
 .glass {
   background: var(--glass-bg);

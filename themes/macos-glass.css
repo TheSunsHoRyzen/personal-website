@@ -59,8 +59,8 @@
   --traffic-glyph: rgb(0 0 0 / 0.6);
 }
 
-/* Touch-sized menu bar on phones (the menu items grow to fill it). */
-@media (max-width: 639px) {
+/* Touch-sized menu bar on phones and any touch-first device (the menu items grow to fill it). */
+@media (max-width: 639px), (pointer: coarse) {
   [data-theme="macos-glass"] {
     --menubar-height: 44px;
   }

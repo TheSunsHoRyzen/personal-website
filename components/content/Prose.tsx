@@ -94,7 +94,7 @@ export function ExtLink({ href, children }: { href: string; children: ReactNode 
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-accent underline underline-offset-2 hover:brightness-125 focus-visible:outline-2 focus-visible:outline-accent"
+      className="py-0.5 text-accent underline underline-offset-2 hover:brightness-125 focus-visible:outline-2 focus-visible:outline-accent"
     >
       {children}
       <span className="sr-only"> (opens in a new tab)</span>

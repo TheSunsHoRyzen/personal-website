@@ -24,7 +24,7 @@ export function Dock() {
               type="button"
               onClick={() => dispatch({ type: "open", id })}
               aria-label={`Restore ${windowDefs[id].menuName}`}
-              className="glass rounded-control flex items-center gap-2 px-3 py-2 text-xs text-fg transition-colors hover:bg-tab-hover focus-visible:outline-2 focus-visible:outline-accent max-sm:py-2.5"
+              className="glass rounded-control flex items-center gap-2 px-3 py-2 text-xs text-fg transition-colors hover:bg-tab-hover focus-visible:outline-2 focus-visible:outline-accent max-sm:py-2.5 pointer-coarse:py-2.5"
             >
               <WindowIcon id={id} className="size-4" />
               {windowDefs[id].menuName}

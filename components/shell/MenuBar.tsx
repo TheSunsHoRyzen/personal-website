@@ -13,7 +13,7 @@ import { useWindows } from "./WindowManager";
 import { windowDefs, type WindowId } from "./windows";
 
 const itemClass =
-  "block w-full rounded-control px-2.5 py-0.5 max-sm:py-2.5 text-left text-xs whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-accent";
+  "block w-full rounded-control px-2.5 py-0.5 max-sm:py-2.5 pointer-coarse:py-2.5 text-left text-xs whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-accent";
 
 /** `name` becomes the page's single (visually hidden) h1, inside the banner landmark. */
 export function MenuBar({ links, name }: { links: SiteLink[]; name: string }) {
@@ -139,7 +139,10 @@ export function MenuBar({ links, name }: { links: SiteLink[]; name: string }) {
         onKeyDown={onKeyDown}
         className="flex min-w-0 flex-1 items-center gap-1"
       >
-        {menus.map((menu) => {
+        {menus.map((menu, index) => {
+          // The last menu sits at the right end of the bar on phones, so its dropdown opens
+          // leftward (right-aligned) to stay on screen; the others open rightward.
+          const alignRight = index === menus.length - 1;
           const hasItems = "items" in menu;
           const isOpen = openMenu === menu.label;
           return (
@@ -170,7 +173,9 @@ export function MenuBar({ links, name }: { links: SiteLink[]; name: string }) {
                   role="menu"
                   data-menu={menu.label}
                   aria-label={menu.label}
-                  className="glass rounded-control absolute top-full left-0 mt-1 min-w-40 p-1"
+                  className={`glass rounded-control absolute top-full mt-1 min-w-40 p-1 ${
+                    alignRight ? "right-0" : "left-0"
+                  }`}
                 >
                   {menu.items.map((item) =>
                     "href" in item ? (

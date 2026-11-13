@@ -30,7 +30,9 @@ function initialEntries(): Entry[] {
   return [{ id: 0, command: null, exitCode: 0, output: runCommand("welcome").output }];
 }
 
-const isWideScreen = () => window.matchMedia("(min-width: 640px)").matches;
+// Autofocus the prompt only where a hardware keyboard is likely: wide screens with a fine pointer.
+// On phones and tablets it would pop up the on-screen keyboard uninvited.
+const isWideScreen = () => window.matchMedia("(min-width: 640px) and (pointer: fine)").matches;
 
 export function Terminal() {
   const { state } = useWindows();
@@ -201,7 +203,11 @@ export function Terminal() {
         </div>
 
         {/* On phones the prompt is 16px: smaller inputs make iOS Safari zoom the page on focus. */}
-        <form onSubmit={onSubmit} className="mt-2 flex items-center gap-2 max-sm:text-base">
+        {/* The input itself has no outline (it has a caret), so the whole prompt line shows focus. */}
+        <form
+          onSubmit={onSubmit}
+          className="mt-2 flex items-center gap-2 rounded-control has-[input:focus]:outline-2 has-[input:focus]:outline-offset-4 has-[input:focus]:outline-accent max-sm:text-base pointer-coarse:text-base"
+        >
           <label htmlFor="terminal-input" className="shrink-0 text-accent">
             {PROMPT}
           </label>
@@ -216,7 +222,7 @@ export function Terminal() {
             autoComplete="off"
             autoCorrect="off"
             spellCheck={false}
-            className="min-w-0 flex-1 bg-transparent text-fg caret-accent outline-none"
+            className="min-h-6 min-w-0 flex-1 bg-transparent text-fg caret-accent outline-none"
           />
         </form>
       </div>
