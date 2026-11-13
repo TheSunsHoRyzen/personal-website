@@ -39,6 +39,9 @@
   --glass-shadow:
     0 24px 60px rgb(0 0 0 / 0.45), 0 2px 8px rgb(0 0 0 / 0.25);
 
+  /* Desktop icon labels sit directly on the wallpaper, so they get a soft shadow for contrast. */
+  --icon-label-shadow: 0 1px 3px rgb(0 0 0 / 0.7);
+
   /* Tabs */
   --tab-active-bg: rgb(255 255 255 / 0.18);
   --tab-hover-bg: rgb(255 255 255 / 0.09);

@@ -1,16 +1,9 @@
 "use client";
 
-import {
-  useRef,
-  type CSSProperties,
-  type PointerEvent,
-  type ReactNode,
-} from "react";
+import { useRef, type CSSProperties, type ReactNode } from "react";
+import { useDrag } from "./useDrag";
 import { useWindows, type WinState } from "./WindowManager";
 import { windowDefs, type WindowId } from "./windows";
-
-const clamp = (n: number, min: number, max: number) =>
-  Math.min(Math.max(n, min), max);
 
 type AppWindowProps = {
   id: WindowId;
@@ -23,7 +16,12 @@ export function AppWindow({ id, win, focused, children }: AppWindowProps) {
   const { dispatch } = useWindows();
   const def = windowDefs[id];
   const ref = useRef<HTMLElement>(null);
-  const drag = useRef<{ offX: number; offY: number } | null>(null);
+  // Dragging only applies to floating windows on wider screens.
+  const dragHandlers = useDrag(
+    ref,
+    () => !win.maximized && window.matchMedia("(min-width: 640px)").matches,
+    (x, y) => dispatch({ type: "move", id, x, y }),
+  );
 
   const visible = win.open && !win.minimized;
 
@@ -34,32 +32,6 @@ export function AppWindow({ id, win, focused, children }: AppWindowProps) {
     "--h": `${def.h}px`,
     zIndex: win.z,
   } as CSSProperties;
-
-  function onPointerDown(e: PointerEvent<HTMLDivElement>) {
-    if ((e.target as HTMLElement).closest("button")) return;
-    // Dragging only applies to floating windows on wider screens.
-    if (win.maximized || !window.matchMedia("(min-width: 640px)").matches) return;
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    drag.current = { offX: e.clientX - rect.left, offY: e.clientY - rect.top };
-    e.currentTarget.setPointerCapture(e.pointerId);
-  }
-
-  function onPointerMove(e: PointerEvent<HTMLDivElement>) {
-    const d = drag.current;
-    const el = ref.current;
-    const layer = el?.offsetParent?.getBoundingClientRect();
-    if (!d || !el || !layer) return;
-    // Keep at least part of the title bar reachable.
-    const x = clamp(e.clientX - d.offX - layer.left, 80 - el.offsetWidth, layer.width - 80);
-    const y = clamp(e.clientY - d.offY - layer.top, 0, layer.height - 40);
-    dispatch({ type: "move", id, x, y });
-  }
-
-  function endDrag() {
-    drag.current = null;
-  }
 
   const lights = [
     { label: "Close", color: "bg-traffic-close", glyph: "×", action: "close" },
@@ -88,10 +60,7 @@ export function AppWindow({ id, win, focused, children }: AppWindowProps) {
       }`}
     >
       <div
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
+        {...dragHandlers}
         onDoubleClick={(e) => {
           if (!(e.target as HTMLElement).closest("button"))
             dispatch({ type: "toggleMaximize", id });

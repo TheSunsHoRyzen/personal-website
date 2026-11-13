@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Desktop } from "@/components/shell/Desktop";
+import { site } from "@/content/site";
 import { AboutContent } from "@/components/windows/AboutContent";
 import { ProjectsContent } from "@/components/windows/ProjectsContent";
 import { WritingsContent } from "@/components/windows/WritingsContent";
@@ -11,6 +12,7 @@ function Placeholder({ children }: { children: ReactNode }) {
 export default function Home() {
   return (
     <Desktop
+      links={site.links}
       contents={{
         terminal: <Placeholder>Terminal coming soon.</Placeholder>,
         projects: <ProjectsContent />,

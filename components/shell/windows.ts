@@ -7,7 +7,7 @@ export type WindowDef = {
   title: string;
   /** Name shown in bold at the left of the menu bar while this window is focused. */
   menuName: string;
-  /** Initial position (px, relative to the area under the menu bar) and size. */
+  /** Initial position (px, relative to the area under the menu bar) and size. Positions start below the desktop icon row (~130px). */
   x: number;
   y: number;
   w: number;
@@ -20,16 +20,16 @@ export const windowDefs: Record<WindowId, WindowDef> = {
     title: "guest@hasan: ~",
     menuName: "Terminal",
     x: 40,
-    y: 24,
+    y: 130,
     w: 820,
-    h: 620,
+    h: 600,
     openAtStart: true,
   },
   projects: {
     title: "Projects",
     menuName: "Projects",
     x: 480,
-    y: 56,
+    y: 130,
     w: 560,
     h: 520,
     openAtStart: false,
@@ -37,17 +37,17 @@ export const windowDefs: Record<WindowId, WindowDef> = {
   about: {
     title: "About",
     menuName: "About",
-    x: 200,
-    y: 40,
+    x: 220,
+    y: 150,
     w: 560,
-    h: 560,
+    h: 540,
     openAtStart: false,
   },
   writings: {
     title: "Writings",
     menuName: "Writings",
-    x: 300,
-    y: 72,
+    x: 320,
+    y: 170,
     w: 520,
     h: 440,
     openAtStart: false,
