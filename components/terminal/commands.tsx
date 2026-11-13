@@ -1,4 +1,7 @@
 import type { ReactNode } from "react";
+import { ExtLink } from "@/components/content/Prose";
+import { site } from "@/content/site";
+import { robotArt } from "./robot";
 
 export type CommandResult = {
   output?: ReactNode;
@@ -18,10 +21,15 @@ export type Command = {
   run: (args: string[]) => CommandResult;
 };
 
-function Help() {
+/** Inline command name, highlighted like the prompt. */
+function Cmd({ children }: { children: ReactNode }) {
+  return <span className="text-accent">{children}</span>;
+}
+
+/** Grouped, alphabetized list of every registered command. */
+function CommandList() {
   return (
     <div className="space-y-3">
-      <p>Available commands:</p>
       {groups.map((group) => {
         const inGroup = commands
           .filter((c) => c.group === group)
@@ -45,8 +53,85 @@ function Help() {
   );
 }
 
-/** The registry. `help` is generated from this list, so new commands show up automatically. */
+function Help() {
+  return (
+    <div className="space-y-3">
+      <p>Available commands:</p>
+      <CommandList />
+    </div>
+  );
+}
+
+function Welcome() {
+  return (
+    <div className="space-y-3">
+      <pre
+        role="img"
+        aria-label="ASCII art of a friendly robot"
+        className="overflow-x-auto leading-tight text-accent"
+      >
+        {robotArt}
+      </pre>
+      <p>
+        Welcome. Type <Cmd>help</Cmd> for available commands.
+      </p>
+      <p>
+        Available commands (also try <Cmd>help</Cmd>):
+      </p>
+      <CommandList />
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div className="space-y-2">
+      <p className="font-semibold">{site.name}</p>
+      <p className="text-fg-muted">
+        {site.headline} · {site.location}
+      </p>
+      <p>{site.summary}</p>
+      <p className="flex flex-wrap gap-4">
+        {site.links.map((link) => (
+          <ExtLink key={link.label} href={link.href}>
+            {link.label}
+          </ExtLink>
+        ))}
+      </p>
+    </div>
+  );
+}
+
+function Stack() {
+  return (
+    <div className="space-y-2">
+      <p>This site is built with:</p>
+      <dl className="grid grid-cols-[6rem_1fr] gap-x-3 gap-y-0.5 pl-2">
+        {site.stack.map((item) => (
+          <div key={item.label} className="contents">
+            <dt className="text-accent">{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
+/** The registry. `help` and `welcome` list this, so new commands show up automatically. */
 export const commands: Command[] = [
+  {
+    name: "about",
+    group: "Navigation",
+    description: "About me",
+    run: () => ({ output: <About /> }),
+  },
+  {
+    name: "stack",
+    group: "Portfolio",
+    description: "Show this site's tech stack",
+    run: () => ({ output: <Stack /> }),
+  },
   {
     name: "clear",
     group: "Session",
@@ -59,6 +144,12 @@ export const commands: Command[] = [
     description: "Print command catalog",
     run: () => ({ output: <Help /> }),
   },
+  {
+    name: "welcome",
+    group: "Session",
+    description: "Reprint intro banner and MOTD",
+    run: () => ({ output: <Welcome /> }),
+  },
 ];
 
 export function runCommand(input: string): CommandResult {
@@ -70,8 +161,7 @@ export function runCommand(input: string): CommandResult {
       exitCode: 127,
       output: (
         <p className="text-danger">
-          command not found: {name}. Type <span className="text-accent">help</span> for available
-          commands.
+          command not found: {name}. Type <Cmd>help</Cmd> for available commands.
         </p>
       ),
     };

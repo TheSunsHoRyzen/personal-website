@@ -4,9 +4,9 @@ import {
   useEffect,
   useRef,
   useState,
-  type FormEvent,
   type MouseEvent,
   type ReactNode,
+  type SubmitEvent,
 } from "react";
 import { useWindows } from "@/components/shell/WindowManager";
 import { runCommand } from "./commands";
@@ -15,30 +15,26 @@ export const PROMPT = "guest@hasan:~$";
 
 type Entry = {
   id: number;
-  /** The typed command; null for output with no prompt line (the greeting). */
+  /** The typed command; null for output with no prompt line (the welcome shown on load). */
   command: string | null;
   output?: ReactNode;
   exitCode: number;
 };
 
-const greeting: Entry = {
-  id: 0,
-  command: null,
-  exitCode: 0,
-  output: (
-    <p>
-      Welcome. Type <span className="text-accent">help</span> for available commands.
-    </p>
-  ),
-};
+/** What the terminal shows on first load: `welcome`'s output with no prompt line above it. */
+function initialEntries(): Entry[] {
+  return [{ id: 0, command: null, exitCode: 0, output: runCommand("welcome").output }];
+}
 
 const isWideScreen = () => window.matchMedia("(min-width: 640px)").matches;
 
 export function Terminal() {
   const { state } = useWindows();
-  const [entries, setEntries] = useState<Entry[]>([greeting]);
+  const [entries, setEntries] = useState<Entry[]>(initialEntries);
   const [input, setInput] = useState("");
   const nextId = useRef(1);
+  // Auto-scroll only follows commands the user submits, so the welcome banner is visible on load.
+  const followOutput = useRef(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,19 +42,21 @@ export function Terminal() {
   // Skipped on narrow screens so the on-screen keyboard doesn't pop up uninvited.
   const terminalFocused = state.focused === "terminal";
   useEffect(() => {
-    if (terminalFocused && isWideScreen()) inputRef.current?.focus();
+    // preventScroll: focusing the off-screen prompt must not scroll the banner out of view.
+    if (terminalFocused && isWideScreen()) inputRef.current?.focus({ preventScroll: true });
   }, [terminalFocused]);
 
-  // Keep the newest output in view.
+  // Keep the newest output in view after the user runs a command.
   useEffect(() => {
     const el = scrollerRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    if (el && followOutput.current) el.scrollTop = el.scrollHeight;
   }, [entries]);
 
-  function onSubmit(e: FormEvent) {
+  function onSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const typed = input.trim();
     setInput("");
+    followOutput.current = true;
 
     if (typed === "") {
       setEntries((prev) => [...prev, { id: nextId.current++, command: "", exitCode: 0 }]);
@@ -85,7 +83,7 @@ export function Terminal() {
   function onScrollerClick(e: MouseEvent) {
     if (e.target instanceof HTMLElement && e.target.closest("a, button")) return;
     if (window.getSelection()?.toString()) return;
-    inputRef.current?.focus();
+    inputRef.current?.focus({ preventScroll: true });
   }
 
   return (
@@ -98,11 +96,11 @@ export function Terminal() {
         {entries.map((entry) => (
           <div key={entry.id}>
             {entry.command !== null && (
-              <p className="break-words whitespace-pre-wrap">
+              <p className="wrap-break-word whitespace-pre-wrap">
                 <span className="text-accent">{PROMPT}</span> {entry.command}
               </p>
             )}
-            {entry.output ? <div className="mt-1 break-words">{entry.output}</div> : null}
+            {entry.output ? <div className="mt-1 wrap-break-word">{entry.output}</div> : null}
           </div>
         ))}
       </div>
