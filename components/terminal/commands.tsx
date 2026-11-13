@@ -75,6 +75,9 @@ function Welcome() {
       <p>
         Welcome. Type <Cmd>help</Cmd> for available commands.
       </p>
+      <p className="text-fg-muted">
+        Tip: Tab completes command names · ↑/↓ history · Ctrl+L clears screen
+      </p>
       <p>
         Available commands (also try <Cmd>help</Cmd>):
       </p>
@@ -151,6 +154,8 @@ export const commands: Command[] = [
     run: () => ({ output: <Welcome /> }),
   },
 ];
+
+export const commandNames = commands.map((c) => c.name);
 
 export function runCommand(input: string): CommandResult {
   const [name, ...args] = input.trim().split(/\s+/);
