@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hasan Ali",
+  title: { default: "Hasan Ali", template: "%s | Hasan Ali" },
   description: "Personal website of Hasan Ali: projects, about, links, and a terminal.",
 };
 

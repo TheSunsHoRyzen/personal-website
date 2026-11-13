@@ -39,6 +39,10 @@
   --glass-shadow:
     0 24px 60px rgb(0 0 0 / 0.45), 0 2px 8px rgb(0 0 0 / 0.25);
 
+  /* Tabs */
+  --tab-active-bg: rgb(255 255 255 / 0.18);
+  --tab-hover-bg: rgb(255 255 255 / 0.09);
+
   /* Shape */
   --radius-window: 14px;
   --radius-control: 8px;
