@@ -1,3 +1,4 @@
+import { site } from "@/content/site";
 import type { WindowId } from "./windows";
 
 export type MenuItem = { label: string } & (
@@ -10,7 +11,6 @@ export type Menu = { label: string } & (
   | { items: MenuItem[] }
 );
 
-// Placeholder URLs: replace with real ones (they move to content/site.ts later).
 export const menus: Menu[] = [
   {
     label: "Projects",
@@ -23,9 +23,6 @@ export const menus: Menu[] = [
   { label: "Writings", open: "writings" },
   {
     label: "Links",
-    items: [
-      { label: "GitHub", href: "https://github.com/" },
-      { label: "LinkedIn", href: "https://www.linkedin.com/" },
-    ],
+    items: site.links,
   },
 ];
